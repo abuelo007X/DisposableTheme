@@ -19,7 +19,8 @@
   @endif
   {{-- Full row with more icons --}}
   @if($DBasic)
-    @include('dashboard.icons')
+    {{-- Abuelo007X: Changing to bigger/same color icons and bigger letters --}}
+    @include('dashboard.icons_dark')
   @endif
 
   <div class="row">
@@ -29,6 +30,8 @@
       @if(!$DBasic)
         @include('dashboard.icons')
       @endif
+      {{-- Abuelo007X: Moved News before Live Map --}}
+      @widget('latestNews', ['count' => 3])
       @if(Theme::getSetting('dash_livemap'))
         @widget('liveMap', ['table' => false, 'height' => '500px'])
       @elseif($DBasic)
@@ -37,16 +40,21 @@
       @if($last_pirep !== null)
         @include('dashboard.pirep_card', ['pirep' => $last_pirep])
       @endif
-      @widget('latestNews', ['count' => 3])
       {{-- Jumpseat Traver and Aircraft Transfer Widgets--}}
       @if($DBasic)
         <div class="row row-cols-md-2">
-          <div class="col-md">
-            @widget('DBasic::JumpSeat')
-          </div>
-          <div class="col-md">
-            @widget('DBasic::TransferAircraft')
-          </div>
+          {{-- Abuelo007X: Added settings to toogle visibility of this option --}}
+          @if((Theme::getSetting('jumpset_trv_dashboard'))) 
+            <div class="col-md">
+              @widget('DBasic::JumpSeat')
+            </div>
+          @endif
+          {{-- Abuelo007X: Added settings to toogle visibility of this option --}}
+          @if((Theme::getSetting('aircraft_trf_dashboard'))) 
+            <div class="col-md">
+              @widget('DBasic::TransferAircraft')
+            </div>
+          @endif
         </div>
       @endif
       {{-- Current Month Leaderboard Widgets--}}
