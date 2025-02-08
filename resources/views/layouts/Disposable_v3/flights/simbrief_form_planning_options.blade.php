@@ -38,15 +38,25 @@
       <div class="input-group input-group-sm">
         <span class="input-group-text col-md-5">Cruise Profile</span>
         <select id="cruise_profile" name="cruise" class="form-select" onchange="CheckCruiseProfile()">
+          {{-- Abuelo007X: Selection message eliminated
           <option value="" selected>Please select profile...</option>
+          --}}
           @foreach($sbaircraft['aircraft_profiles_cruise'] as $cr)
-            <option value="{{ $cr }}">{{ $cr }}</option>
+            {{-- Abuelo007X: Selecting "CI" as default value --}}
+            <option value="{{ $cr }}" @if($cr === "CI") selected @endif>{{ $cr }}</option>
           @endforeach
         </select>
       </div>
       <div class="input-group input-group-sm">
         <span class="input-group-text col-md-5">Cost Index (CI)</span>
-        <input type="number" name="civalue" id="civalue" value="AUTO" min="0" max="{{ $sbac['aircraft_max_costindex'] ?? 999 }}" placeholder="AUTO" class="form-control" disabled>
+        {{-- Abuelo007X: Changing from an open field value to selection as required for skymatixva 
+        <input type="number" name="civalue" id="civalue" value="AUTO" min="0" max="999" placeholder="AUTO" class="form-control" disabled>
+        --}}
+        <select name="civalue" id="civalue" class="form-control">
+          <option value="20" selected>20 [-2 hs flight]</option>
+          <option value="50">50 [+2 hs flight]</option>
+          <option value="AUTO">AUTO</option>
+        </select>
       </div>
       <div class="input-group input-group-sm">
         <span class="input-group-text col-md-5">Descent Profile</span>
@@ -59,15 +69,26 @@
     @else
       <div class="input-group input-group-sm">
         <span class="input-group-text col-md-5">Cruise Profile</span>
+        {{-- Abuelo007X: Using Original onchange function
         <select id="cruise_profile" name="cruise" class="form-select" onchange="CheckCruiseProfile()">
-          <option value="" selected>None</option>
-          <option value="CI">CI</option>
-          <option value="LRC">LRC</option>
+        --}}
+        <select id="cruise_profile" name="cruise" class="form-select" onchange="CheckCruiseProfile()">
+        {{-- Abuelo007X: Changing default value to CI as required for skymatixva --}}
+          {{-- <option value="" selected>None</option> --}}
+          <option value="CI" selected>CI (Cost Index)</option>
+          <option value="LRC">LRC (Long Range Cruise)</option>
         </select>
       </div>
       <div class="input-group input-group-sm">
         <span class="input-group-text col-md-5">Cost Index (CI)</span>
+        {{-- Abuelo007X: Changing from an open field value to selection as required for skymatixva 
         <input type="number" name="civalue" id="civalue" value="AUTO" min="0" max="999" placeholder="AUTO" class="form-control" disabled>
+        --}}
+        <select name="civalue" id="civalue" class="form-control">
+          <option value="20" selected>20 [-2 hs flight]</option>
+          <option value="50">50 [+2 hs flight]</option>
+          <option value="AUTO">AUTO</option>
+        </select>
       </div>
     @endif
     <div class="input-group input-group-sm">
@@ -106,15 +127,6 @@
       </select>
     </div>
     <div class="input-group input-group-sm">
-      <span class="input-group-text col-md-5">Alternate Airports</span>
-      <select name="altn_count" class="form-select">
-        <option value="1">1</option>
-        <option value="2" selected>2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-    </div>
-    <div class="input-group input-group-sm">
       <span class="input-group-text col-md-5">SID/STAR Type</span>
       <select id="sidstar" class="form-select" onchange="SidStarSelection()">
         <option value="C">Conventional</option>
@@ -131,28 +143,18 @@
     </div>
     <div class="input-group input-group-sm">
       <span class="input-group-text col-md-5">ETOPS Planning</span>
-      <select name="etops" id="etops" class="form-select" onchange="CheckEtops()">
+      <select name="etops" class="form-select">
         <option value="0" selected>Disabled</option>
         <option value="1">Enabled</option>
       </select>
     </div>
     <div class="input-group input-group-sm">
-      <span class="input-group-text col-md-5">ETOPS Threshold Time</span>
-      <select name="etops" id="etopstime" class="form-select" disabled>
-        <option value="60" selected>60</option>
-        <option value="90">90</option>
-        <option value="120">120</option>
-        <option value="180">180</option>
-      </select>
-    </div>
-    <div class="input-group input-group-sm">
-      <span class="input-group-text col-md-5">ETOPS Rule Time</span>
-      <select name="etops" id="etopsrule" class="form-select" disabled>
-        <option value="60">60</option>
-        <option value="90" selected>90</option>
-        <option value="120">120</option>
-        <option value="180">180</option>
-        <option value="240">240</option>
+      <span class="input-group-text col-md-5">Alternate Airports</span>
+      <select name="altn_count" class="form-select">
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
       </select>
     </div>
   </div>
